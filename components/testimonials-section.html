@@ -1,15 +1,13 @@
-<section id="testimonials" class="testimonials">
-    <div class="particle-background"></div>
+<section id="testimonials" class="testimonials section">
     <div class="container">
-        <div class="section-header">
-            <h2>Depoimentos</h2>
-            <div class="section-line"></div>
-            <p class="section-subtitle">O que nossos clientes dizem</p>
-        </div>
-        <div class="testimonial-slider">
+        <h2 class="section-title" data-aos="fade-up">Depoimentos</h2>
+        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">O que meus clientes estão dizendo</p>
+        
+        <div class="testimonial-slider" data-aos="fade-up" data-aos-delay="200">
             <div class="testimonial-container">
-                <div class="testimonial-item active" data-rating="5">
-                    <div class="testimonial-content tilt-card">
+                <!-- Depoimento 1 -->
+                <div class="testimonial-item tilt-card">
+                    <div class="testimonial-content tilt-card-inner">
                         <div class="testimonial-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -17,27 +15,25 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <div class="testimonial-text tilt-card-inner">
+                        <div class="testimonial-text">
                             <i class="fas fa-quote-left"></i>
-                            <p>
-                                Daniel implementou um sistema de automação que reduziu nossos custos operacionais em
-                                30%. Sua expertise em IA aplicada à engenharia civil é impressionante.
-                            </p>
+                            <p>"O Daniel foi extremamente profissional durante todo o projeto de nossa casa. Sua atenção aos detalhes e conhecimento técnico nos deu muita segurança. Recomendo sem hesitação para qualquer projeto de engenharia civil."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-img">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente">
+                                <img src="images/testimonials/client1.jpg" alt="Ricardo Santos">
                             </div>
                             <div class="author-info">
-                                <h4>Ricardo Mendes</h4>
-                                <p>Diretor de Operações, Construtora XYZ</p>
+                                <h4>Ricardo Santos</h4>
+                                <p>Projeto Residencial</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-item" data-rating="5">
-                    <div class="testimonial-content tilt-card">
+                <!-- Depoimento 2 -->
+                <div class="testimonial-item tilt-card">
+                    <div class="testimonial-content tilt-card-inner">
                         <div class="testimonial-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -45,61 +41,62 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <div class="testimonial-text tilt-card-inner">
+                        <div class="testimonial-text">
                             <i class="fas fa-quote-left"></i>
-                            <p>
-                                A implementação de soluções de IA pelo Daniel em nosso projeto residencial 
-                                trouxe economia de 25% no cronograma e melhor aproveitamento de recursos.
-                            </p>
+                            <p>"Contratamos o Daniel para um projeto comercial complexo e ele superou todas as nossas expectativas. Sua capacidade de resolver problemas e sugerir soluções inovadoras foi fundamental para o sucesso do nosso empreendimento."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-img">
-                                <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Cliente">
+                                <img src="images/testimonials/client2.jpg" alt="Ana Oliveira">
                             </div>
                             <div class="author-info">
                                 <h4>Ana Oliveira</h4>
-                                <p>Gerente de Projetos, Construções Modernas</p>
+                                <p>Projeto Comercial</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-item" data-rating="4">
-                    <div class="testimonial-content tilt-card">
+                <!-- Depoimento 3 -->
+                <div class="testimonial-item tilt-card">
+                    <div class="testimonial-content tilt-card-inner">
                         <div class="testimonial-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <div class="testimonial-text tilt-card-inner">
+                        <div class="testimonial-text">
                             <i class="fas fa-quote-left"></i>
-                            <p>
-                                As automações desenvolvidas pelo Daniel transformaram nossos processos de 
-                                gerenciamento de obras. Ganhamos precisão e agilidade nas tomadas de decisão.
-                            </p>
+                            <p>"O que mais me impressionou no trabalho do Daniel foi seu comprometimento com prazos e orçamentos. Em um mercado onde atrasos são comuns, ele entregou nosso projeto pontualmente e dentro do valor acordado. Um verdadeiro profissional."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-img">
-                                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Cliente">
+                                <img src="images/testimonials/client3.jpg" alt="Marcos Vinicius">
                             </div>
                             <div class="author-info">
-                                <h4>Carlos Santos</h4>
-                                <p>CEO, Inovação Construtiva</p>
+                                <h4>Marcos Vinicius</h4>
+                                <p>Reforma Estrutural</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <!-- Controles do slider -->
             <div class="testimonial-controls">
-                <button class="testimonial-prev btn-icon"><i class="fas fa-chevron-left"></i></button>
+                <button class="testimonial-prev" aria-label="Depoimento anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
                 <div class="testimonial-dots">
-                    <span class="dot active" data-slide="0"></span>
-                    <span class="dot" data-slide="1"></span>
-                    <span class="dot" data-slide="2"></span>
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
                 </div>
-                <button class="testimonial-next btn-icon"><i class="fas fa-chevron-right"></i></button>
+                <button class="testimonial-next" aria-label="Próximo depoimento">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </div>

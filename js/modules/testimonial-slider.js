@@ -1,240 +1,180 @@
-/**
- * Módulo TestimonialSlider - Controla o slider de depoimentos
- * Versão corrigida com inicialização garantida
- */
-const TestimonialSlider = (function () {
-    // Variáveis do módulo
-    let initialized = false;
-    let slides = [];
-    let dots = [];
-    let prevBtn;
-    let nextBtn;
-    let currentSlide = 0;
-    let slideInterval;
-    let touchStartX = 0;
-    let touchEndX = 0;
+<!-- Seção de Depoimentos - Versão Simplificada -->
+<section id="testimonials" class="testimonials section">
+    <div class="container">
+        <h2 class="section-title">Depoimentos</h2>
+        <p class="section-subtitle">O que meus clientes estão dizendo</p>
+        
+        <!-- Slider simplificado com layout alternativo -->
+        <div class="testimonial-slider" id="testimonial-slider">
+            <div class="testimonial-container">
+                <div class="testimonial-item active">
+                    <div class="testimonial-content">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="testimonial-text">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"O Daniel foi extremamente profissional durante todo o projeto de nossa casa. Sua atenção aos detalhes e conhecimento técnico nos deu muita segurança. Recomendo sem hesitação para qualquer projeto de engenharia civil."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-img">
+                                <img src="images/testimonials/client1.jpg" alt="Ricardo Santos" onerror="this.src='https://via.placeholder.com/50'">
+                            </div>
+                            <div class="author-info">
+                                <h4>Ricardo Santos</h4>
+                                <p>Projeto Residencial</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controles do slider -->
+            <div class="testimonial-controls">
+                <button class="testimonial-prev" aria-label="Depoimento anterior" onclick="TestimonialSliderSimple.prev()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="testimonial-dots">
+                    <span class="dot active" data-index="0" onclick="TestimonialSliderSimple.goTo(0)"></span>
+                    <span class="dot" data-index="1" onclick="TestimonialSliderSimple.goTo(1)"></span>
+                    <span class="dot" data-index="2" onclick="TestimonialSliderSimple.goTo(2)"></span>
+                </div>
+                <button class="testimonial-next" aria-label="Próximo depoimento" onclick="TestimonialSliderSimple.next()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
-    /**
-     * Inicializa o módulo
-     */
-    function init() {
-        // Verifica se o módulo já foi inicializado
-        if (initialized) return;
-        
-        console.log("Inicializando TestimonialSlider...");
-        
-        // Aguarda um momento para garantir que o DOM esteja completamente carregado
-        setTimeout(() => {
-            // Verifica se os elementos existem
-            if (document.querySelector('.testimonial-slider')) {
-                console.log("Elementos de depoimentos encontrados, configurando slider...");
-                setupSlider();
-                setupTiltEffect();
-                initialized = true;
-            } else {
-                console.log("Elementos de depoimentos não encontrados, tentando novamente...");
-                // Tenta novamente em 500ms
-                setTimeout(init, 500);
+    <!-- Script inline para garantir inicialização -->
+    <script>
+    // Módulo simplificado embutido para garantir funcionamento
+    const TestimonialSliderSimple = (function() {
+        let currentIndex = 0;
+        const testimonials = [
+            {
+                rating: 5,
+                text: "O Daniel foi extremamente profissional durante todo o projeto de nossa casa. Sua atenção aos detalhes e conhecimento técnico nos deu muita segurança. Recomendo sem hesitação para qualquer projeto de engenharia civil.",
+                author: "Ricardo Santos",
+                project: "Projeto Residencial",
+                image: "images/testimonials/client1.jpg"
+            },
+            {
+                rating: 5,
+                text: "Contratamos o Daniel para um projeto comercial complexo e ele superou todas as nossas expectativas. Sua capacidade de resolver problemas e sugerir soluções inovadoras foi fundamental para o sucesso do nosso empreendimento.",
+                author: "Ana Oliveira",
+                project: "Projeto Comercial",
+                image: "images/testimonials/client2.jpg"
+            },
+            {
+                rating: 4.5,
+                text: "O que mais me impressionou no trabalho do Daniel foi seu comprometimento com prazos e orçamentos. Em um mercado onde atrasos são comuns, ele entregou nosso projeto pontualmente e dentro do valor acordado. Um verdadeiro profissional.",
+                author: "Marcos Vinicius",
+                project: "Reforma Estrutural",
+                image: "images/testimonials/client3.jpg"
             }
-        }, 100);
-    }
+        ];
 
-    /**
-     * Configura o slider de depoimentos
-     */
-    function setupSlider() {
-        slides = document.querySelectorAll('.testimonial-item');
-        dots = document.querySelectorAll('.dot');
-        prevBtn = document.querySelector('.testimonial-prev');
-        nextBtn = document.querySelector('.testimonial-next');
-        
-        console.log(`Slider configurado com ${slides.length} slides e ${dots.length} dots`);
-
-        if (slides.length === 0) {
-            console.warn("Nenhum slide encontrado!");
-            return;
+        function init() {
+            updateTestimonial();
+            startAutoRotation();
         }
 
-        // Mostra o primeiro slide inicialmente
-        showSlide(0);
-
-        // Set up click handlers for next/prev buttons
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                showSlide((currentSlide - 1 + slides.length) % slides.length);
-                resetInterval();
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                showSlide((currentSlide + 1) % slides.length);
-                resetInterval();
-            });
-        }
-
-        // Set up click handlers for dots
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                showSlide(i);
-                resetInterval();
-            });
-        });
-
-        // Setup swipe functionality for mobile
-        const testimonialContainer = document.querySelector('.testimonial-container');
-        if (testimonialContainer) {
-            testimonialContainer.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
+        function updateTestimonial() {
+            const testimonial = testimonials[currentIndex];
+            const container = document.querySelector('.testimonial-container');
+            if (!container) return;
             
-            testimonialContainer.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-        }
-
-        // Start automatic sliding
-        startInterval();
-    }
-
-    /**
-     * Mostra um slide específico pelo índice
-     */
-    function showSlide(index) {
-        // Validação básica
-        if (!slides || slides.length === 0) return;
-        if (index < 0 || index >= slides.length) return;
-        
-        console.log(`Mostrando slide ${index}`);
-        
-        // Hide all slides
-        slides.forEach(slide => {
-            slide.classList.remove('active');
-            slide.style.opacity = 0;
-            slide.style.transform = 'translateY(20px) scale(0.95)';
-        });
-        
-        // Deactivate all dots
-        dots.forEach(dot => dot.classList.remove('active'));
-        
-        // Show selected slide with animation
-        setTimeout(() => {
-            slides[index].classList.add('active');
-            slides[index].style.opacity = 1;
-            slides[index].style.transform = 'translateY(0) scale(1)';
+            // Criar estrelas baseado na avaliação
+            let stars = '';
+            const fullStars = Math.floor(testimonial.rating);
+            const hasHalfStar = testimonial.rating % 1 !== 0;
             
-            if (dots.length > index) {
-                dots[index].classList.add('active');
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';    
             }
             
-            currentSlide = index;
-        }, 50);
-    }
-
-    /**
-     * Processa gestos de deslizamento (swipe)
-     */
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        if (touchEndX < touchStartX - swipeThreshold) {
-            // Swipe left, go to next slide
-            showSlide((currentSlide + 1) % slides.length);
-            resetInterval();
-        } else if (touchEndX > touchStartX + swipeThreshold) {
-            // Swipe right, go to previous slide
-            showSlide((currentSlide - 1 + slides.length) % slides.length);
-            resetInterval();
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            // Atualizar o HTML
+            container.innerHTML = `
+                <div class="testimonial-item active">
+                    <div class="testimonial-content">
+                        <div class="testimonial-rating">
+                            ${stars}
+                        </div>
+                        <div class="testimonial-text">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"${testimonial.text}"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-img">
+                                <img src="${testimonial.image}" alt="${testimonial.author}" onerror="this.src='https://via.placeholder.com/50'">
+                            </div>
+                            <div class="author-info">
+                                <h4>${testimonial.author}</h4>
+                                <p>${testimonial.project}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Atualizar os dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
         }
-    }
 
-    /**
-     * Inicia o intervalo para rotação automática dos slides
-     */
-    function startInterval() {
-        slideInterval = setInterval(() => {
-            showSlide((currentSlide + 1) % slides.length);
-        }, 5000);
-    }
+        function next() {
+            currentIndex = (currentIndex + 1) % testimonials.length;
+            updateTestimonial();
+            resetAutoRotation();
+        }
 
-    /**
-     * Reinicia o intervalo de rotação automática
-     */
-    function resetInterval() {
-        clearInterval(slideInterval);
-        startInterval();
-    }
+        function prev() {
+            currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+            updateTestimonial();
+            resetAutoRotation();
+        }
 
-    /**
-     * Configura o efeito tilt para os cartões de depoimentos
-     */
-    function setupTiltEffect() {
-        const tiltCards = document.querySelectorAll('.tilt-card');
+        function goTo(index) {
+            if (index >= 0 && index < testimonials.length) {
+                currentIndex = index;
+                updateTestimonial();
+                resetAutoRotation();
+            }
+        }
+
+        let autoRotationTimer;
         
-        console.log(`Configurando efeito tilt para ${tiltCards.length} cartões`);
+        function startAutoRotation() {
+            autoRotationTimer = setInterval(next, 6000);
+        }
         
-        tiltCards.forEach(card => {
-            card.addEventListener('mousemove', handleTilt);
-            card.addEventListener('mouseleave', resetTilt);
-        });
-    }
-    
-    /**
-     * Manipula o efeito tilt baseado na posição do mouse
-     */
-    function handleTilt(e) {
-        const card = this;
-        const cardRect = card.getBoundingClientRect();
-        const centerX = cardRect.left + cardRect.width / 2;
-        const centerY = cardRect.top + cardRect.height / 2;
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-        
-        // Calculate rotation based on mouse position relative to card center
-        const rotateY = ((mouseX - centerX) / (cardRect.width / 2)) * 5;
-        const rotateX = -((mouseY - centerY) / (cardRect.height / 2)) * 5;
-        
-        // Apply the rotation
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        
-        // Add a slight glow effect on hover
-        const intensity = Math.sqrt(Math.pow(rotateX, 2) + Math.pow(rotateY, 2)) / 5;
-        card.style.boxShadow = `0 10px 30px rgba(0, 0, 0, 0.1), 
-                                ${rotateY / 2}px ${rotateX / 2}px 15px rgba(var(--primary-color-rgb), 0.2)`;
-    }
-    
-    /**
-     * Restaura a posição original do cartão
-     */
-    function resetTilt() {
-        this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-        this.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.1)';
-    }
+        function resetAutoRotation() {
+            clearInterval(autoRotationTimer);
+            startAutoRotation();
+        }
 
-    /**
-     * Força a reinicialização do módulo
-     */
-    function forceInit() {
-        initialized = false;
-        init();
-    }
+        // Inicializar quando o script carregar
+        setTimeout(init, 500);
 
-    // API pública do módulo
-    return {
-        init,
-        forceInit
-    };
-})();
-
-// Auto-inicialização após carregamento completo
-document.addEventListener('DOMContentLoaded', function() {
-    // Primeiro tenta inicializar normalmente
-    TestimonialSlider.init();
-    
-    // Tenta novamente após todos os componentes estarem carregados
-    window.addEventListener('load', function() {
-        setTimeout(() => {
-            TestimonialSlider.forceInit();
-        }, 1000);
-    });
-});
+        return {
+            next,
+            prev,
+            goTo
+        };
+    })();
+    </script>
+</section>
